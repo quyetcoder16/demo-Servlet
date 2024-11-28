@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@page import="cm.model.Role"%>
+<%@page import="java.util.List"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page isELIgnored="false"%>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Midterm Project">
+<meta name="author" content="Yami An Nephilim">
+<link href="./plugins/images/favicon.png" rel="icon" type="image/png"
+	sizes="16x16">
+<title>Role | CRM Project</title>
+<!-- Bootstrap Core CSS -->
+<link href="./bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Menu CSS -->
+<link
+	href="./plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"
+	rel="stylesheet">
+<!-- Animation CSS -->
+<link href="./css/animate.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="./css/style.css" rel="stylesheet">
+<!-- Color CSS -->
+<link href="./css/colors/megna-dark.css" rel="stylesheet" id="theme">
+<link href="./css/custom.css" rel="stylesheet">
+<!-- Toastify CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+	rel="stylesheet" type="text/css">
+<!-- Hide button search -->
+<style>
+#search {
+	display: none
+}
+</style>
+</head>
+
+<%
+	List<Role> list = (List<Role>) request.getAttribute("roles");
+%>
+
+<body>
+
+	<div></div>
+	<div id="wrapper">
+		<div></div>
+		<div></div>
+		<!-- Page content -->
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row bg-title">
+					<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+						<h4 class="page-title">Danh Sách Quyền</h4>
+					</div>
+					<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
+						<a th:href="@{/role/add}" class="btn btn-sm btn-success"> Thêm
+							mới </a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="white-box">
+							<div class="table-responsive">
+								<table class="table" id="example">
+									<thead>
+										<tr>
+											<th>STT</th>
+											<th>Vai Trò</th>
+											<th>Mô Tả</th>
+											<th>Hành Động</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${roles}" var="itemData">
+											<tr>
+												<td>No. ${itemData.getId()}</td>
+												<td>${itemData.getRoleName()}</td>
+												<td>${itemData.getDescription()}</td>
+												<td><a class="btn btn-sm btn-primary">Sửa</a> <a
+													id-role="${itemData.getId()}"
+													class="btn btn-sm btn-danger btn-xoa">Xóa</a></td>
+											</tr>
+										</c:forEach>
+										<c:out value="Hello JSTL"></c:out>
+										<%
+											for (Role role : list) {
+										%>
+										<tr>
+											<td>No. <%=role.getId()%>
+											</td>
+											<td><%=role.getRoleName()%></td>
+											<td><%=role.getDescription()%></td>
+											<td><a class="btn btn-sm btn-primary"> sửa </a> <a
+												id-role=<%=role.getId()%>
+												class="btn btn-sm btn-danger btn-xoa"> Xóa </a></td>
+										</tr>
+										<%
+											}
+										%>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:replace="fragments/footer :: footer"></div>
+		</div>
+	</div>
+	<!-- jQuery JS -->
+	<script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap Core JS -->
+	<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- Menu Plugin JS -->
+	<scriptlk
+		src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js">
+	</script> <!-- Slimscroll JS --> <script src="js/jquery.slimscroll.js"></script>
+	<script src="js/jquery.dataTables.js"></script> <!-- Wave Effects JS -->
+	<script src="js/waves.js"></script> <!-- Custom Theme JS --> <script
+		src="js/custom.min.js"></script> <script src="js/role.js"></script> <script>
+			$(document).ready(function() {
+				$('#example').DataTable();
+			});
+		</script> <!-- Toastify JS --> <script
+		src="https://cdn.jsdelivr.net/npm/toastify-js" type="text/javascript"></script>
+	<script th:inline="javascript">
+		var flag = /*[[${flag}]]*/false;
+		var msg = /*[[${msg}]]*/null;
+		if (flag) {
+			Toastify({
+				text : msg,
+				position : "center"
+			}).showToast();
+		}
+	</script> <!-- Link icon to button search --> <script>
+		$(function() {
+			$("#search-link").on('click', function(e) {
+				e.preventDefault();
+				$("#search:hidden").trigger('click');
+			});
+		});
+	</script>
+</body>
+
+</html>
